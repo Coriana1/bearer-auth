@@ -1,5 +1,5 @@
 'use strict';
-const { User } = require('../models/index.js');
+const { users } = require('../models/index.js');
 
 module.exports = async (req, res, next) => {
   if (!req.headers.authorization) {
@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
   const [username, password] = decodedCredentials.split(':');
 
   try {
-    req.user = await User.authenticateBasic(username, password);
+    req.user = await users.authenticateBasic(username, password);
     next();
   } catch (e) {
     console.error(e);
@@ -22,21 +22,19 @@ module.exports = async (req, res, next) => {
 
 
 
-
-
-
-
 // 'use strict';
 // const { decode } = require('base64');
-// const { User } = require('../models/index.js');
+// const { users } = require('../models/index.js');
 
 // module.exports = async (req, res, next) => {
 
 //   if (!req.headers.authorization) { return _authError(); }
-//   let basic = req.headers.authorization;
-//   let [username, pass] = base64.decode(basic).split(':');
+
+//   let basic = req.headers.authorization.split('').pop();
+//   let [username, password] = base64.decode(basic).split(':');
+
 //   try {
-//     req.user = await User.authenticateBasic(username, pass);
+//     req.user = await users.authenticateBasic(username, password);
 //     next();
 //   } catch (e) {
 //     console.error(e);

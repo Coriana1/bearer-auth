@@ -1,15 +1,15 @@
 'use strict';
 
-const { user } = require('../models/index.js');
+const { users } = require('../models/index.js');
 
 async function handleSignup(req, res, next) {
   try {
-    let userRecord = await user.create(req.body);
-    const output = {
+    // let userRecord = await user.create(req.body);
+    const user = {
       user: userRecord,
       token: userRecord.token
     };
-    res.status(200).json(output);
+    res.status(201).json(output);
   } catch (e) {
     // console.error(e);
     next(e);
@@ -31,7 +31,7 @@ async function handleSignin(req, res, next) {
 
 async function handleGetUsers(req, res, next) {
   try {
-    const userRecords = await User.findAll({});
+    const userRecords = await users.findAll({});
     const userList = userRecords.map(user => user.username);
     res.status(200).json(list);
   } catch (e) {
@@ -40,12 +40,12 @@ async function handleGetUsers(req, res, next) {
 }
 
 function handleSecret(req, res, next) {
-  res.status(200).send("Welcome to the secret area!");
+  res.status(200).send('Welcome to the secret area!');
 }
 
 module.exports = {
   handleSignup,
   handleSignin,
   handleGetUsers,
-  handleSecret
-}
+  handleSecret,
+};
